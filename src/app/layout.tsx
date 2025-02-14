@@ -1,0 +1,27 @@
+import type { Metadata } from "next";
+import { Gabarito } from "next/font/google";
+import "./globals.css";
+import LayoutWrapper from "@/components/LayoutWrapper";
+
+const gabarito = Gabarito({
+  subsets: ["latin"],
+  variable: "--font-gabarito",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "Admin Dashboard",
+  description: "Manage projects and financials",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="en">
+      <body className={`${gabarito.variable} bg-gray-50 text-gray-900`}>
+        <LayoutWrapper>{children}</LayoutWrapper>
+      </body>
+    </html>
+  );
+}
