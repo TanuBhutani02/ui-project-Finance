@@ -1,22 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiMenu, FiX, FiGrid, FiRefreshCw, FiBarChart, FiFileText, FiLogOut } from "react-icons/fi";
+import { FaProjectDiagram as FontAwesomeIcon } from "react-icons/fa";
+import { useAuth } from "@/app/context/AuthContext";
 
 const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: boolean) => void }) => {
   const router = useRouter();
+  //const {menuItems } = useAuth();
+  const iconMap: { [key: string]: JSX.Element } = {
+    dashboard: <FiGrid size={20} />,
+    projects: <FontAwesomeIcon size={20} />,
+    update: <FiRefreshCw size={20} />,
+    reports: <FiFileText size={20} />,
+    financials: <FiBarChart size={20} />,
+  };
 
-  const menuItems = [
-    { name: "Dashboard", icon: <FiGrid size={20} />, path: "/dashboard" },
-    { name: "Update", icon: <FiRefreshCw size={20} />, path: "/update" },
-    { name: "Reports", icon: <FiFileText size={20} />, path: "/reports" },
-    { name: "Financials", icon: <FiBarChart size={20} />, path: "/financials" },
-  ];
+  let menuItems: { name: string; icon: JSX.Element; path: string }[] = [
+    { name: "Dashboard", icon: iconMap["dashboard"], path: "/dashboard" },
+    { name: "Projects", icon: iconMap["projects"], path: "/projects" },
+    { name: "Update", icon: iconMap["update"], path: "/update" },
+    { name: "Reports", icon: iconMap["reports"], path: "/reports" },
+    { name: "Financials", icon: iconMap["financials"], path: "/financials" },
+  ].filter(item => item.name);
+  
+  //  let menuList = menuItems.map((el : any)=>{
+  //   return {name : el.name, icon : iconMap[el.name.toLowerCase()], path : el.path}
+  // })
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-screen bg-gray-900 text-white flex flex-col transition-all duration-300 ${
+      className={`z-30 fixed top-0 left-0 h-screen bg-gray-900 text-white flex flex-col transition-all duration-300 ${
         isOpen ? "w-64" : "w-20"
       }`}
     >
@@ -37,7 +52,7 @@ const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: boo
 
       {/* Menu Items */}
       <nav className="flex-1 px-4">
-        {menuItems.map((item) => (
+        {menuItems.map((item: any) => (
           <button
             key={item.name}
             className="flex items-center gap-3 w-full p-3 rounded-lg text-left hover:bg-blue-700 transition"

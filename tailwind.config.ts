@@ -15,6 +15,16 @@ export default {
       fontFamily: {
         gabarito: "var(--font-gabarito), sans-serif",
       },
+      keyframes: {
+        progress: {
+          '0%': { width: '0%' },
+          '100%': { width: '100%' },
+        },
+      },
+      animation: {
+        progress: 'progress 1s linear infinite',
+      },
+
     },
   },
   plugins: [],

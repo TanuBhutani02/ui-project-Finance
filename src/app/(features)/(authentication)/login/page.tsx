@@ -1,29 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { userService } from "@/services/user";
+import { useAuth } from "@/app/context/AuthContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { isAuthenticated, user, login , loading, handleUserDetails} = useAuth();
   const router = useRouter();
 
   const ADMIN_EMAIL = process.env.TEMP_EMAIL || "";
   const ADMIN_PASSWORD = process.env.TEMP_PASSWORD || "";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      router.push("/dashboard");
-    } else {
-      setError("Invalid credentials. Please try again.");
-    }
+    console.log('sbmit call ',);
+    const authorizedUserResult = await userService.getAuthorizedUser({email, password});
+    handleUserDetails(authorizedUserResult);
+
+  if(authorizedUserResult){
+    router.push("/dashboard");
+  }
   };
+
+useEffect(()=>{
+  if(user){
+    router.push("/dashboard");
+  }
+},[user])
+
+  let AuthenticationProgress;
+  if(loading){
+    AuthenticationProgress = (
+      <div className="w-full h-1 bg-blue-500">
+        <div className="h-full bg-blue-700 animate-progress"></div>
+      </div>
+    )
+  }
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-lg">
+        {AuthenticationProgress}
         <div className="text-center">
           <div className="flex justify-center">
             {/* logo */}

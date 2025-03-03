@@ -4,11 +4,15 @@
 import { useState } from "react";
 import * as XLSX from "xlsx";
 import { uploadFile } from "@/services/uploadApis";
+import Input from "@/components/Input";
+import { months, years } from "@/types/role";
 
 export default function UpdatePage() {
   const [file, setFile] = useState<File | null>(null);
   const [data, setData] = useState<any[]>([]);
   const [error, setError] = useState<string>("");
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
 
   // Required column order
   const requiredColumns = [
@@ -45,6 +49,14 @@ export default function UpdatePage() {
       alert(error);
     }
   };
+
+  function handleYearChange(){
+    console.log("Year changed");
+  }
+
+  function handleMonthChange(){
+    console.log("Month changed");
+  }
 
   const readExcel = (file: File) => {
     const reader = new FileReader();
@@ -122,9 +134,43 @@ export default function UpdatePage() {
 
   return (
     <main className="min-h-screen p-8">
+      
       <h1 className="text-3xl font-bold text-gray-900 font-gabarito mb-6">
         Upload and Preview Excel File
       </h1>
+
+      <label className="block mb-4">
+          <span className="text-gray-700">Select Year</span>
+          <select
+            value={selectedYear}
+            onChange={handleYearChange}
+            className="block w-full mt-1 p-2 border border-gray-300 rounded-md"
+          >
+            <option value="" disabled>Select a year</option>
+            {years.map((year) => (
+              <option key={year.value} value={year.value}>
+                {year.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="block mb-4">
+          <span className="text-gray-700">Select Month</span>
+          <select
+            value={selectedMonth}
+            onChange={handleMonthChange}
+            className="block w-full mt-1 p-2 border border-gray-300 rounded-md"
+          >
+            <option value="" disabled>Select a month</option>
+            {months.map((month) => (
+              <option key={month.value} value={month.value}>
+                {month.label}
+              </option>
+            ))}
+          </select>
+        </label>
+      
 
       <div className="bg-white p-6 rounded-lg shadow-lg">
         {!file ? (
