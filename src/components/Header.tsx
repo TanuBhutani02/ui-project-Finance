@@ -6,7 +6,7 @@ export function Header(){
     const {user , logout} = useAuth();
       
     return (
-        <header className="bg-gray-900 text-white h-14 flex justify-end items-center fixed top-0 left-0 w-full">
+        <header className="bg-gray-900 text-white h-14 z-50 flex justify-end items-center fixed top-0 left-0 w-full">
         <div className="relative flex items-center  space-x-4 m-2">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}

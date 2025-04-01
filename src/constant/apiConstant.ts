@@ -1,6 +1,9 @@
 export const ENDPOINTS = {
   USERS: '/users',
-  PROJECTS: '/projects',
+  PROJECT: '/project',
   Role: '/role',
   AUTH: '/auth',
+  BILLING :'/billing',
+  EMPLOYEE: "./employees",
+  OrgBilling: "./orgBilling"
 };

@@ -51,7 +51,7 @@ const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: boo
       </div>
 
       {/* Menu Items */}
-      <nav className="flex-1 px-4">
+      <nav className="flex-1 px-4 z-10000 overflow-hidden sticky top-0">
         {menuItems.map((item: any) => (
           <button
             key={item.name}

@@ -30,7 +30,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // ].filter(item => item.name);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    //const token = localStorage.getItem("token");
     //if (token) fetchUserDetails(token);
     // else {
     //   setLoading(false);

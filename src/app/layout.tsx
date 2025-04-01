@@ -20,7 +20,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${gabarito.variable} bg-gray-50 text-gray-900`}>
+      <body className={`${gabarito.variable} bg-gray-50 text-gray-900  overflow-y-auto`}>
       <AuthProvider>
       <LayoutWrapper>{children}</LayoutWrapper>
       </AuthProvider>

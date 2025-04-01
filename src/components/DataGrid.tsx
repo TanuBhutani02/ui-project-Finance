@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
 interface Column<T> {
-  key: keyof T;
-  label: string;
+  key?: any;
+  label?: string;
   isSortable?: boolean;
   render?: (value: any, row: T) => React.ReactNode; // Custom render function
+  cellClassName?: string;
 }
 
 interface DataGridProps<T> {
@@ -55,7 +56,7 @@ const DataGrid = <T,>({ columns, data, emptyMessage = "No records found." }: Dat
               </td>
             </tr>
           ) : (
-            sortedData.map((row, rowIndex) => (
+            sortedData.map((row: any, rowIndex) => (
               <tr key={rowIndex} className="border-t font-gabarito text-gray-700 hover:bg-gray-100 transition">
                 {columns.map(({ key, render }) => (
                   <td key={String(key)} className="px-6 py-4">

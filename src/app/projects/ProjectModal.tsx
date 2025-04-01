@@ -18,9 +18,9 @@ export default function ProjectModal({onSubmit, loading, error, onClose}: Projec
               title="Add New Project"
               onClose={onClose}
               formElement={<div className="grid grid-cols-2 gap-4">
-                <Input label="Project Name" name="projectName" placeholder={"Enter Project Name"}/>
+                <Input label="Project Name" name="name" placeholder={"Enter Project Name"}/>
                 <Input label="BU Head" name="buHead" placeholder = "Enter Bu Head" />
-                <Input label="DM" name="dm" placeholder ="Enter Delivery Manager"/>
+                <Input label="DM" name="delieveryManager" placeholder ="Enter Delivery Manager"/>
                 <Input label="Billing Type" name="billingType" type="select"
                 value="" 
             

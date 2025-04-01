@@ -7,10 +7,12 @@ export interface IBaseService<T> {
   
     create(data: T, path?: string): Promise<T>;
   
-    update(id: string, data: Partial<T>, path?: string): Promise<T>;
+    update(data: Partial<T>,id?: string, path?: string): Promise<T>;
   
     delete(id: string, path?: string): Promise<void>;
     
     post(data: any, path?: string) : Promise<T>;
+
+    search(data: any, path?: string, method?: "POST" | "GET"): Promise<T[]>;
   }
   
