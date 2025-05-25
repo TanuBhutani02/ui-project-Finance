@@ -93,29 +93,7 @@ export default function Project() {
       <PageHeader title="Project Details" />
 
       {/* Inline Editable Field with Emoji Icons */}
-      <div className="flex items-center space-x-3 my-4">
-        <label className="text-gray-700 font-medium">Org Conversion Rate:</label>
-        <EditableContainer>
-          {isEditing ? (
-            <>
-              <EditableInput
-                type="number"
-                value={tempRate}
-                onChange={handleRateChange}
-                onBlur={saveRate}
-                onKeyPress={handleKeyPress}
-                autoFocus
-              />
-              <IconButton onClick={saveRate}>💾</IconButton>
-            </>
-          ) : (
-            <>
-              <span className="text-gray-800 font-semibold">{orgConversionRate}</span>
-              <IconButton onClick={() => setIsEditing(true)}>✏️</IconButton>
-            </>
-          )}
-        </EditableContainer>
-      </div>
+
 
       <div className="flex justify-end mb-4">
         <Button onClick={handleProjectModal}>Add New Project</Button>

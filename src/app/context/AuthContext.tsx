@@ -22,7 +22,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [menuItems, setMenuItems] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-   // let menuItems: { name: string; icon: JSX.Element; path: string }[] = [
+  // let menuItems: { name: string; icon: JSX.Element; path: string }[] = [
   //   { name: "Dashboard", icon: iconMap["dashboard"], path: "/dashboard" },
   //   { name: "Update", icon: iconMap["update"], path: "/update" },
   //   { name: "Reports", icon: iconMap["reports"], path: "/reports" },
@@ -70,12 +70,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const  handleUserDetails = async (data: any) => {
+  const handleUserDetails = async (data: any) => {
     setUser(data);
     localStorage.setItem("token", JSON.stringify(data));
     const menuItems = await userService.getRoleMenus(+data.role);
     setMenuItems(menuItems);
-     console.log('menuItems = ',menuItems);
+    console.log('menuItems = ', menuItems);
   }
   const logout = () => {
     setUser(null);

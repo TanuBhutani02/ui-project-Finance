@@ -27,7 +27,7 @@ const useProject = () => {
     const [orgConversionRate, setOrgConversionRate] = useState(0);
     const [billingData, setBillingData] = useState<any>([]);
     const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
-    const [selectedMonth, setSelectedMonth] = useState(month);
+    const [selectedMonth, setSelectedMonth] = useState("");
     const [selectedYear, setSelectedYear] = useState(year);
 
     useEffect(() => {
@@ -108,17 +108,17 @@ const useProject = () => {
         // }
     };
 
-     async function fetchBillingData(){
+    async function fetchBillingData() {
         try {
             if (!selectedProjects) return;
-            const payload = { month : selectedMonth, year: selectedYear , projects: selectedProjects}
-            const dashboardData = await billingService.search(payload, "/filter","POST");
+            const payload = { month: +selectedMonth, year: selectedYear, projects: selectedProjects }
+            const dashboardData = await billingService.search(payload, "/filter", "POST");
             setBillingData((prevData: any) =>
-              JSON.stringify(prevData) !== JSON.stringify(dashboardData) ? dashboardData : prevData
+                JSON.stringify(prevData) !== JSON.stringify(dashboardData) ? dashboardData : prevData
             );
-          } catch (err) {
+        } catch (err) {
             console.error("Error fetching dashboard data:", err);
-          }
+        }
     }
 
     return {

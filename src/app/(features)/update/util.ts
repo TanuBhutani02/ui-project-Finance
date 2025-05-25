@@ -20,8 +20,7 @@ const cleanNumber = (value: string) => {
 };
 export function prepareEmployeePaylaod(employeeList: any, selectedDate: any){
   return employeeList.map((el: any)=>{
-  
-    return {empid: el.empid, name: el.name,salaryDetails: {ctc: cleanNumber(el.ctc.toString()), effective_from: selectedDate}}
+    return {empid: el.empid, name: el.name,salaryDetails: {ctc: cleanNumber(el.ctc.toString()), effective_from: selectedDate, remarks:"Salary added using Excel upload"}}
   }
 )
 }

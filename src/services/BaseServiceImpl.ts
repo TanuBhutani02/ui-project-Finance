@@ -21,8 +21,9 @@ export abstract class BaseService<T> implements IBaseService<T> {
 
   async getById(id: string, path?: string): Promise<T> {
     try {
-      const response = (await axiosInstance.get(this.getPath(path, id))).data;
-      return response.data;
+   const response = (await axiosInstance.get(this.getPath(path, id))).data;
+   console.log("Response", response);   
+   return response;
     } catch (error) {
         return this.handleError(error);
     }

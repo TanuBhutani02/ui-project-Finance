@@ -1,20 +1,23 @@
 "use client";
 
 import { JSX, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { FiMenu, FiX, FiGrid, FiRefreshCw, FiBarChart, FiFileText, FiLogOut } from "react-icons/fi";
+import { FcBusinessman } from "react-icons/fc";
 import { FaProjectDiagram as FontAwesomeIcon } from "react-icons/fa";
 import { useAuth } from "@/app/context/AuthContext";
 
 const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: boolean) => void }) => {
   const router = useRouter();
-  //const {menuItems } = useAuth();
+  const currentPath = usePathname(); // Get current path using usePathname
+
   const iconMap: { [key: string]: JSX.Element } = {
     dashboard: <FiGrid size={20} />,
     projects: <FontAwesomeIcon size={20} />,
     update: <FiRefreshCw size={20} />,
     reports: <FiFileText size={20} />,
     financials: <FiBarChart size={20} />,
+    employee: <FcBusinessman size={20} />,
   };
 
   let menuItems: { name: string; icon: JSX.Element; path: string }[] = [
@@ -23,20 +26,19 @@ const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: boo
     { name: "Update", icon: iconMap["update"], path: "/update" },
     { name: "Reports", icon: iconMap["reports"], path: "/reports" },
     { name: "Financials", icon: iconMap["financials"], path: "/financials" },
+    { name: "Employees", icon: iconMap["employee"], path: "/employees" },
   ].filter(item => item.name);
-  
-  //  let menuList = menuItems.map((el : any)=>{
-  //   return {name : el.name, icon : iconMap[el.name.toLowerCase()], path : el.path}
-  // })
+
+  // Function to check if the item is active
+  const isActive = (path: string) => currentPath === path;
 
   return (
     <aside
-      className={`z-30 fixed top-0 left-0 h-screen bg-gray-900 text-white flex flex-col transition-all duration-300 ${
-        isOpen ? "w-64" : "w-20"
-      }`}
+      className={`z-30 fixed top-0 left-0 h-screen bg-gray-900 text-white flex flex-col transition-all duration-300 ${isOpen ? "w-64" : "w-20"
+        }`}
     >
       {/* Sidebar Header */}
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between p-6">
         {isOpen && <h1 className="text-xl font-bold font-gabarito">Gross Margin Pro</h1>}
         <button onClick={() => setIsOpen(!isOpen)} className="text-white focus:outline-none">
           {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
@@ -55,11 +57,11 @@ const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: boo
         {menuItems.map((item: any) => (
           <button
             key={item.name}
-            className="flex items-center gap-3 w-full p-3 rounded-lg text-left hover:bg-blue-700 transition"
+            className={`flex items-center gap-3 w-full p-3 rounded-lg text-left hover:bg-blue-700 transition ${isActive(item.path) ? "bg-blue-600" : ""}`}
             onClick={() => router.push(item.path)}
           >
             {item.icon}
-            {isOpen && <span className="font-gabarito">{item.name}</span>}
+            {isOpen && <span className={`font-gabarito ${isActive(item.path) ? "text-white" : "text-gray-300"}`}>{item.name}</span>}
           </button>
         ))}
       </nav>

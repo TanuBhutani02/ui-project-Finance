@@ -73,24 +73,24 @@ export default function UpdatePage() {
   const [validationResult, setValidationResult] = useState<string | null>(null);
   const [projects, setProjects] = useState<any>(null);
   const [fileType, setFileType] = useState("monthlyTime");
-  const [selectedDate, setSelectedDate] = useState< undefined>(undefined);
+  const [selectedDate, setSelectedDate] = useState<undefined>(undefined);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string | null>(null)
 
 
-  async function loadProjects(){
+  async function loadProjects() {
     let data = await ProjectService.get();
-        data = data.map((el : any)=>({
-          value: el.Id,
-          label : el.name
-        })) 
-        console.log(data, "final data")
+    data = data.map((el: any) => ({
+      value: el.Id,
+      label: el.name
+    }))
+    console.log(data, "final data")
     setProjects(data);
   }
 
-  useEffect(()=>{
-  loadProjects();
-  },[])
+  useEffect(() => {
+    loadProjects();
+  }, [])
   // Required column order
   const requiredColumns = [
     "employeeId",
@@ -118,7 +118,7 @@ export default function UpdatePage() {
     // Check file type
     if (
       uploadedFile.type ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
       uploadedFile.type === "application/vnd.ms-excel"
     ) {
       setFile(uploadedFile);
@@ -132,7 +132,7 @@ export default function UpdatePage() {
 
   const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedMonth(e.target.value);
- 
+
   };
 
   const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -176,82 +176,82 @@ export default function UpdatePage() {
   const processRows = (jsonData: any[]) => {
     const headers = jsonData[0];
     setColumns(
-      jsonData[0].map((header: string) =>{ 
-        console.log(" test field name", header.toLowerCase() === 'hrs/day'? 'hrsperday': header.replace(/[^a-zA-Z0-9]/g, '').toLowerCase().trim());
+      jsonData[0].map((header: string) => {
+        console.log(header.toLowerCase() === 'hrs/day', " test field name", header.toLowerCase() === 'hrs/day' ? 'hrsperday' : header.replace(/[^a-zA-Z0-9]/g, '').toLowerCase().trim());
         return ({
-        field: key(header) === 'hrs/day'? 'hrsperday': header.replace(/[^a-zA-Z0-9]/g, '').toLowerCase().trim(),
-        headerName: header,
-        width: 150,
-      })
+          field: header.toLowerCase() === 'hrs/day' ? 'hrsperday' : header.replace(/[^a-zA-Z0-9]/g, '').toLowerCase().trim(),
+          headerName: header,
+          width: 150,
+        })
       }
-    )
+      )
     );
-   
-   // if(headers.length > 5){
-    
-   // const rows = jsonData.slice(1).map((row, index) => {
-      //console.log("test for max billable hours", Number(row[7]), Number(row[6])); 
-      //debugger;
-      // Construct the static part of the row object
-      // const staticColumns = {
-      //   id: index + 1, // Auto-incrementing ID
-      //   empid: row[0] ? String(row[0]) : "",
-      //   name: row[1] ? String(row[1]) : "",
-      //   billingstatus: row[2] ? String(row[2]) : "",
-      //   hrsperday: row[3] ? Number(row[3]) : 8,
-      //   rate: row[4] ? Number(row[4]) : 0,
-      //   multibillingaccount: row[5] ? String(row[5]) : 1,
-      //   accountcostfactor: row[6] ? Number(row[6]) : 100.00,
-      //   maxhoursbillable: row[7]? Number(row[7]):0,
-      // };
-      // const dynamicColumns = headers.slice(7).reduce((acc: { [x: string]: string | number; }, header: string | number, i: number) => {
-      //   acc[String(header).toLowerCase()] = row[i + 7] ? String(row[i + 7]) : "";
-      //   return acc;
-      // }, {});
+
+    // if(headers.length > 5){
+
+    // const rows = jsonData.slice(1).map((row, index) => {
+    //console.log("test for max billable hours", Number(row[7]), Number(row[6])); 
+    //debugger;
+    // Construct the static part of the row object
+    // const staticColumns = {
+    //   id: index + 1, // Auto-incrementing ID
+    //   empid: row[0] ? String(row[0]) : "",
+    //   name: row[1] ? String(row[1]) : "",
+    //   billingstatus: row[2] ? String(row[2]) : "",
+    //   hrsperday: row[3] ? Number(row[3]) : 8,
+    //   rate: row[4] ? Number(row[4]) : 0,
+    //   multibillingaccount: row[5] ? String(row[5]) : 1,
+    //   accountcostfactor: row[6] ? Number(row[6]) : 100.00,
+    //   maxhoursbillable: row[7]? Number(row[7]):0,
+    // };
+    // const dynamicColumns = headers.slice(7).reduce((acc: { [x: string]: string | number; }, header: string | number, i: number) => {
+    //   acc[String(header).toLowerCase()] = row[i + 7] ? String(row[i + 7]) : "";
+    //   return acc;
+    // }, {});
 
 
-      // const combinedRow : any = {
-      //   id: staticColumns.id,
-      //   empid: staticColumns.empid,
-      //   name: staticColumns.name,
-      //   billingstatus: staticColumns.billingstatus,
-      //   hrsperday: staticColumns.hrsperday,
-      //   rate: staticColumns.rate,
-      //   multibillingaccount: staticColumns.multibillingaccount? staticColumns.multibillingaccount : 1,
-      //   accountcostfactor: staticColumns.accountcostfactor,
-      //   maxhoursbillable: staticColumns.maxhoursbillable,
-      //    ...dynamicColumns,
-      // };
-     
-   //   return combinedRow;
+    // const combinedRow : any = {
+    //   id: staticColumns.id,
+    //   empid: staticColumns.empid,
+    //   name: staticColumns.name,
+    //   billingstatus: staticColumns.billingstatus,
+    //   hrsperday: staticColumns.hrsperday,
+    //   rate: staticColumns.rate,
+    //   multibillingaccount: staticColumns.multibillingaccount? staticColumns.multibillingaccount : 1,
+    //   accountcostfactor: staticColumns.accountcostfactor,
+    //   maxhoursbillable: staticColumns.maxhoursbillable,
+    //    ...dynamicColumns,
+    // };
+
+    //   return combinedRow;
     //});
     //setRows(rows); 
-  //}
+    //}
     //else{
-       const rows = jsonData.slice(1).map((row)=>{ 
-        const oneRow = headers.reduce((acc: any ,header: any, index: number)=> {
-          acc["id"] = Math.random();
-          if(header.trim().toLowerCase()=="ctc") {
-            acc[key(header)] = row[index];
-          }else if(key(header)=="multibillingaccount"){
-            acc[key(header)]=row[index] || 1;
-          }else if(key(header) === 'hrs/day'){
-           acc['hrsperday'] = row[index];
-          } else{
-            acc[header.replace(/[^a-zA-Z0-9]/g,'').toLowerCase()]=row[index];
-          }
-          return acc;
-        },{})
-     
-        return oneRow;
+    const rows = jsonData.slice(1).map((row) => {
+      const oneRow = headers.reduce((acc: any, header: any, index: number) => {
+        acc["id"] = Math.random();
+        if (header.trim().toLowerCase() == "ctc") {
+          acc[key(header)] = row[index];
+        } else if (key(header) == "multibillingaccount") {
+          acc[key(header)] = row[index] || 1;
+        } else if (header.toLowerCase() === 'hrs/day') {
+          acc['hrsperday'] = row[index];
+        } else {
+          acc[key(header)] = row[index];
+        }
+        return acc;
+      }, {})
+
+      return oneRow;
     }
-    ) 
-   
+    )
+
     setRows(rows);
     //}
-    
-  //};
-  //  }
+
+    //};
+    //  }
   }
 
   const readExcel = (file: File, type: string) => {
@@ -281,8 +281,8 @@ export default function UpdatePage() {
         //   const errorMessage = `❌ Invalid Excel format. \n\nEnsure the file contains these columns in order:\n${requiredColumns.join(
         //     ", "
         //   )}`;
-       
-        
+
+
         //   setError(errorMessage);
         //   setFile(null);
         //   setData([]);
@@ -303,7 +303,7 @@ export default function UpdatePage() {
         //   test: row[5] ? String(row[5]) : "",
         // }));
         // Console log the JSON data with IDs
-       
+
       }
     };
   };
@@ -319,18 +319,17 @@ export default function UpdatePage() {
     setError("");
   };
 
-  function handleProjectChange(e: any){
+  function handleProjectChange(e: any) {
     setSelectedProject(e.target.value);
   }
 
-  function handleFileType(e: any){
+  function handleFileType(e: any) {
 
     setFileType(e.target.value);
   }
 
-  
+
   const handleSave = async () => {
-    debugger;
     if (error || rows.length === 0) {
       alert("❌ Cannot save invalid data!");
       return;
@@ -338,45 +337,42 @@ export default function UpdatePage() {
     try {
       calculateDaysInMonth(selectedMonth, selectedYear);
       let payload;
-   if ( fileType !=='employee') {
-       payload = preparePaylaod(rows,{project:selectedProject,month:(selectedMonth),year:selectedYear});
-   }else{
-    payload = prepareEmployeePaylaod(rows,selectedDate);
-   }
-       let response : any;
-      if( fileType === 'employee' ){
+      if (fileType !== 'employee') {
+        payload = preparePaylaod(rows, { project: selectedProject, month: (selectedMonth), year: selectedYear });
+      } else {
+        payload = prepareEmployeePaylaod(rows, selectedDate);
+      }
+      let response: any;
+      if (fileType === 'employee') {
         response = await EmployeeService.update(payload);
       } else {
-        console.log("call billing service");
         response = await billingService.create(payload);
       }
 
-      if (response.statusCode== 200) {
+      if (response.statusCode == 200) {
         setRows([]);
         setColumns([]);
         setFile(null);
-        alert("✅ Data saved successfully!")}
+        alert("✅ Data saved successfully!")
+      }
       else throw new Error("Error in saving");
     } catch {
       alert("❌ Failed to save data!");
     }
   };
 
- function handleSelectedData(e: any){
-
-const epochTime = moment(e, "ddd MMM DD YYYY HH:mm:ss [GMT]ZZ").valueOf();
-console.log(epochTime);
-  setSelectedDate(e);
- }
+  function handleSelectedData(e: any) {
+    setSelectedDate(e);
+  }
 
 
- function handleTabSwitch(){
-  handleRemoveFile();
-   
- }
+  function handleTabSwitch() {
+    handleRemoveFile();
+
+  }
   return (
     <Container className="container">
-      
+
       <Tabs handleTabSwitch={handleTabSwitch}>
         <Tab label="📁 Portfolio Monthly Timesheet">
           <h1 className="mt mb-4">📊 Project Data Management</h1>
@@ -387,45 +383,45 @@ console.log(epochTime);
                 <option key={project.value} value={project.value}>{project.label}</option>
               ))}
             </Select>
-            
+
             <Select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
               <option value="" disabled>Select a year</option>
               {years.map((year) => (<option key={year.value} value={year.value}>{year.label}</option>))}
             </Select>
-            
+
             <Select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
               <option value="" disabled>Select a month</option>
               {months.map((month) => (<option key={month.value} value={month.value}>{month.label}</option>))}
             </Select>
           </Row>
           <div>
-          <label className="mb-12">📂 Upload File:</label>
+            <label className="mb-12">📂 Upload File:</label>
           </div>
-          <input className="mt-4" type="file" accept=".xlsx, .xls"    ref={fileInputRef} onChange={(e)=>handleFileUpload(e, "portfolio")} />
-        
+          <input className="mt-4" type="file" accept=".xlsx, .xls" ref={fileInputRef} onChange={(e) => handleFileUpload(e, "portfolio")} />
+
         </Tab>
 
         <Tab label="👨‍💻 Employee Details 👩‍💻">
           <h1 className="p-4">👥 Employee Data Management</h1>
           <Calendar selected={selectedDate} onChange={handleSelectedData} />
-          <input type="file" accept=".xlsx, .xls"    ref={fileInputRef} onChange={(e)=>handleFileUpload(e, "employee")} className="mt-4" />
+          <input type="file" accept=".xlsx, .xls" ref={fileInputRef} onChange={(e) => handleFileUpload(e, "employee")} className="mt-4" />
         </Tab>
       </Tabs>
-    
+
       {file && <>
         <button
-                className="bg-red-500 text-white py-2 px-4 rounded-lg font-gabarito hover:bg-red-600 transition"
-                onClick={handleRemoveFile}
-              >
-                Remove File
-              </button>
-              <Button onClick={handleSave}>💾 Save Data</Button>
+          className="bg-red-500 text-white py-2 px-4 rounded-lg font-gabarito hover:bg-red-600 transition"
+          onClick={handleRemoveFile}
+        >
+          Remove File
+        </button>
+        <Button onClick={handleSave}>💾 Save Data</Button>
       </>}
-      
 
-            {/* Table Preview */}
-            <div className="overflow-x-auto max-h-96 border rounded-lg mt-4">
-              {/* <table className="min-w-full bg-white">
+
+      {/* Table Preview */}
+      <div className="overflow-x-auto max-h-96 border rounded-lg mt-4">
+        {/* <table className="min-w-full bg-white">
                 <thead className="bg-gray-200 text-gray-900 font-gabarito">
                   <tr>
                     <th className="px-6 py-3 border">ID</th>{" "}
@@ -467,16 +463,16 @@ console.log(epochTime);
                 </tbody>
               </table> */}
 
-{rows.length > 0 && (
+        {rows.length > 0 && (
           <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
             <h2 className="text-2xl font-bold mb-4">Processed Rows</h2>
             <DataGridComponent columns={columns} rows={rows} />
           </div>
         )}
-            </div>
+      </div>
 
-            {/* Buttons */}
-            {/* <div className="flex gap-4 mt-4">
+      {/* Buttons */}
+      {/* <div className="flex gap-4 mt-4">
               <button
                 className="bg-red-500 text-white py-2 px-4 rounded-lg font-gabarito hover:bg-red-600 transition"
                 onClick={handleRemoveFile}
@@ -495,9 +491,9 @@ console.log(epochTime);
                 Save Data
               </button>
             </div> */}
-        
-      
-  
- </Container>
+
+
+
+    </Container>
   );
 }

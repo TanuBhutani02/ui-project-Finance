@@ -1,5 +1,3 @@
-import { GridColDef } from "@mui/x-data-grid";
-
 export const ProjectColumns = [
 { key: "project_name", label: "Project Name", isSortable: true },
 { key: "bu_head", label: "Bu Head", isSortable: true },
@@ -20,3 +18,5 @@ export const PortFoliocolumns = [
     { field: "factored_monthly_cost", headerName: "Factored Monthly Cost", width: 200, cellClassName: "soft-green", },
     { field: "status", headerName: "Status", width: 120 },
   ];
+
+  
