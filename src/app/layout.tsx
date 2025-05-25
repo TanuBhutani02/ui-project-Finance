@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Gabarito } from "next/font/google";
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import { AuthContext, AuthProvider } from "./context/AuthContext";
 
 const gabarito = Gabarito({
   subsets: ["latin"],
@@ -19,8 +20,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${gabarito.variable} bg-gray-50 text-gray-900`}>
-        <LayoutWrapper>{children}</LayoutWrapper>
+      <body className={`${gabarito.variable} bg-gray-50 text-gray-900  overflow-y-auto`}>
+      <AuthProvider>
+      <LayoutWrapper>{children}</LayoutWrapper>
+      </AuthProvider>
+       
       </body>
     </html>
   );

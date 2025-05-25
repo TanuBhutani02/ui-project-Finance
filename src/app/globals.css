@@ -13,9 +13,20 @@
     --foreground: #ededed;
   }
 }
+@layer components {
+  .soft-green {
+    @apply bg-green-100;
+  }
+}
 
+html{
+  overflow-y: auto;
+}
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  overflow-x: hidden; 
+ 
 }
